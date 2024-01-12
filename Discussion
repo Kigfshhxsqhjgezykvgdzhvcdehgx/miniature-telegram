@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat App</title>
+    <style>
+        body {
+            background-color: #1f1f1f;
+            color: white;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            align-items: center;
+        }
+        #messages {
+            overflow-y: scroll;
+            max-height: 300px;
+            background-color: #222;
+            padding: 10px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            width: 100%;
+        }
+        #messageInput {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+        #sendButton {
+            background-color: #333;
+            color: white;
+            padding: 10px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        #shareLink {
+            background-color: #333;
+            color: white;
+            padding: 10px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+        #usernameInput {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <label for="usernameInput">Votre nom d'utilisateur :</label>
+        <input type="text" id="usernameInput">
+    </div>
+    <div id="messages"></div>
+    <textarea id="messageInput" maxlength="200"></textarea>
+    <button id="sendButton" onclick="sendMessage()">Envoyer</button>
+    <button id="shareLink" onclick="shareChat()">Partager le Lien</button>
+
+    <script>
+        function sendMessage() {
+            const messageInput = document.getElementById('messageInput');
+            const messagesContainer = document.getElementById('messages');
+            const usernameInput = document.getElementById('usernameInput');
+
+            const message = messageInput.value.trim();
+            const username = usernameInput.value.trim();
+
+            if (message !== '' && username !== '') {
+                const newMessage = document.createElement('div');
+                newMessage.textContent = `${username}: ${message}`;
+                messagesContainer.appendChild(newMessage);
+
+                setTimeout(() => {
+                    newMessage.remove();
+                }, 120000); // Retirer le message après 2 minutes
+
+                playRipSound();
+
+                messageInput.value = '';
+            }
+        }
+
+        function shareChat() {
+            const usernameInput = document.getElementById('usernameInput');
+            const username = usernameInput.value.trim();
+
+            // Générer un lien avec un paramètre simulé
+            const chatLink = generateChatLink(username);
+            
+            // Afficher le lien dans la console (simulant le partage dans une interface comme Google)
+            console.log('Lien de la conversation :', chatLink);
+
+            // Dans un environnement réel, vous enverriez probablement le lien à d'autres utilisateurs
+        }
+
+        function generateChatLink(username) {
+            // Paramètres simulés pour le lien
+            const roomId = Math.floor(Math.random() * 1000); // ID de la salle de discussion simulé
+
+            // Lien simulé avec les paramètres
+            return `https://example.com/chat?username=${username}&roomId=${roomId}`;
+        }
+
+        function playRipSound() {
+            // Ajoutez ici le code pour jouer le son de papier déchiré
+        }
+    </script>
+</body>
+</html>
